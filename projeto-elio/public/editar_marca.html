@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Marca</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Marca</h1>
+        <form id="editMarcaForm">
+            <input type="hidden" id="marcaId" name="id">
+            <div class="input-group">
+                <label for="nome">Nome da Marca:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <button type="submit">Salvar Alterações</button>
+            <p id="message" class="error-message"></p>
+        </form>
+        <p><a href="lista_entidades.html">Voltar para a Listagem</a></p>
+    </div>
+    <script src="js/editar_marca.js"></script>
+</body>
+</html>

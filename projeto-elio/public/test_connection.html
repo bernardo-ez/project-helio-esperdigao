@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Conexão - Projeto Elio</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de Conexão - Projeto Elio</h1>
+    
+    <div id="results"></div>
+    
+    <button onclick="testAPI()">Testar API</button>
+    <button onclick="testLogin()">Testar Login</button>
+    <button onclick="window.location.href='index.html'">Ir para Login</button>
+
+    <script>
+        async function testAPI() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="info">Testando conexão com a API...</div>';
+            
+            try {
+                const response = await fetch('../api.php/marcas');
+                if (response.ok) {
+                    const data = await response.json();
+                    results.innerHTML = '<div class="success">✅ API funcionando! Marcas encontradas: ' + data.length + '</div>';
+                } else {
+                    results.innerHTML = '<div class="error">❌ API retornou erro: ' + response.status + '</div>';
+                }
+            } catch (error) {
+                results.innerHTML = '<div class="error">❌ Erro de conexão: ' + error.message + '</div>';
+            }
+        }
+
+        async function testLogin() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="info">Testando login...</div>';
+            
+            try {
+                const response = await fetch('../api.php/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    results.innerHTML = '<div class="success">✅ Login funcionando! Token recebido.</div>';
+                } else {
+                    const data = await response.json();
+                    results.innerHTML = '<div class="error">❌ Login falhou: ' + (data.message || 'Erro desconhecido') + '</div>';
+                }
+            } catch (error) {
+                results.innerHTML = '<div class="error">❌ Erro no teste de login: ' + error.message + '</div>';
+            }
+        }
+    </script>
+</body>
+</html>
